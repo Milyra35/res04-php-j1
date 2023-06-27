@@ -1,0 +1,97 @@
+<?php
+
+$nb = rand(1000, 9999);
+$lettre1 = chr(rand(65, 90));
+$lettre2 = chr(rand(65, 90));
+$robot = $lettre1.$lettre2.'-'.$nb;
+
+date_default_timezone_set('Europe/Paris');
+$today = date("d m y");
+$hour = date("H:i:s");
+
+$randNb = rand(1, 10);
+
+$randWorld = rand(1, 3);
+
+$rand2 = rand(1, 1000);
+
+function search(int $start, int $end, float $guess) : float
+{
+    $mid = round(($start + $end) / 2);
+    if($guess === $mid)
+    {
+        return $mid;
+    }
+    else if($mid < $guess)
+    {
+        return search($mid, $end, $guess);
+    }
+    else
+    {
+        return search($start, $mid, $guess);
+    }
+}
+
+?>
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Robot Factory</title>
+    </head>
+    <body>
+        <article>
+            <header>
+                <h1>Salut, humain. Je suis <?=$robot;?>.</h1>
+            </header>
+            <section>
+                <h2>Nous sommes le <?=$today;?>, il est <?=$hour;?></h2>
+                <p>
+                    J'ai choisi le nombre <?=$randNb;?>. C'est un nombre
+                    <?php
+                        if($randNb %2 === 0)
+                        {
+                            echo "pair";
+                        }
+                        else 
+                        {
+                            echo "impair";
+                        }
+                    ?>.
+                </p>
+                <p>
+                    Mon nom à l'envers s'écrit <?=strrev($robot);?>. Ah. Ah. Ah.
+                </p>
+                <p>
+                    <?php
+                        if($randWorld === 1 || $randWorld === 2)
+                        {
+                            echo "Vous voulez un café ?";
+                        }
+                        else 
+                        {
+                            echo "Extermination ! Extermination !";
+                        }
+                    ?>    
+                </p>
+                <p>
+                    <?php
+                        $i=0;
+                        while($i !== $rand2)
+                        {
+                            $i++;
+                        }
+                        if($i === $rand2)
+                        {
+                            echo "Je vais tous vous exterminer, le nombre de mon subconscient est ".$i;
+                        }
+                    ?>
+                </p>
+                <p>
+                    <?=search(0, 1000, $rand2);?>
+                </p>
+            </section>
+        </article>
+    </body>
+</html>
