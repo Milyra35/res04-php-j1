@@ -33,6 +33,15 @@ $students = [
     ]
 ];
 
+$average=0;
+
+function average(float $grade1, float $grade2, float $grade3) : float
+{
+    $sum = $grade1 + $grade2 + $grade3;
+    $average = $sum / 3;
+    return $average;
+}
+
 ?>
 
 <!doctype html>
@@ -40,13 +49,29 @@ $students = [
     <head>
         <meta charset="UTF-8">
         <title>Mini projet bulletin de notes</title>
+        <link rel="stylesheet" href="style.css" type="text/css" />
     </head>
     <body>
         <?php
             foreach($students as $student)
             {
+                $student['average'] = average($student['grades'][0], $student['grades'][1], $student['grades'][2]);
         ?>
-        <article class="">
+        <article class=
+            <?php 
+                if($student['average'] < 10)
+                {
+                    echo "red";
+                }
+                else if($student['average'] > 13)
+                {
+                    echo "green";
+                }
+                else 
+                {
+                    echo "orange";
+                }
+            ?>>    
             <header>
                 <h1>
                     <?= "$student[lastName] $student[firstName]"; ?>
@@ -55,24 +80,23 @@ $students = [
             <section>
                 <h2>Notes : </h2>
                 <ul>
-                    <li>
-                        <?php 
-                            $i=0;
-                            while($i < count($students['grades']))
-                            {
-                                echo $students[$i]['grades'][$i];
-                                $i++;
-                            }
-                        ?>
-                    </li>
+                    <?php
+                        foreach($student['grades'] as $grade)
+                        {
+                    ?>
+                    
+                    <li><?= $grade ;?></li>
+                    <?php
+                        }
+                    ?>
                 </ul>
             </section>
             <footer>
-                <h3>Moyenne des notes de l'étudiant </h3>
+                <h3><?= $student['average']; ?></h3>
             </footer>
         </article>
         <?php
-            };
+            }
         ?>
     </body>
 </html>
